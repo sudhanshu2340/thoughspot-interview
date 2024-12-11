@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import usePokemon from "./hooks/usePokemon";
+import { Pokemon } from "./components/Pokemon";
+import React from "react";
 
 function App() {
+  const { loading, pokemons, error } = usePokemon();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {loading ? (
+        <div>Loading Result</div>
+      ) : (
+        <React.Fragment>
+          {error ? (
+            <div>{error}</div>
+          ) : (
+            <React.Fragment>
+              {pokemons.map((pokemon) => (
+                <Pokemon key={pokemon.name} pokemon={pokemon} />
+              ))}
+            </React.Fragment>
+          )}
+        </React.Fragment>
+      )}
     </div>
   );
 }
